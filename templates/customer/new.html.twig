@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новый клиент{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Создание нового клиента</h1>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        {{ form_row(form.firstName) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.lastName) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.email) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        {{ form_row(form.companyName) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.position) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        {{ form_row(form.phone1) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.phone2) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.phone3) }}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('app_customer_index') }}" class="btn btn-secondary">
+                        Назад к списку
+                    </a>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
