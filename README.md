@@ -14,7 +14,7 @@
 - `composer require symfony/form` — для удобного создания и обработки форм.
 - `composer require symfony/validator` — для валидации данных в формах и сущностях.
 - `composer require symfony/security-bundle` — для обеспечения безопасности, включая защиту от CSRF-атак.
-- `composer require symfony/twig-bundle` — Twig используется в Symfony для работы с шаблонами.
+- `composer require symfony/twig-bundle` — Twig используется в Symfony для работы с шаблонами. Я думаю без него никуда?
 - `composer require symfony/asset` — для управления ассетами, но в итоге я им не пользовался.
 - `composer require knplabs/knp-paginator-bundle` — для удобной реализации пагинации.
 - `composer require maker` — мощный инструмент для генерации кода (сущностей, контроллеров и пр.), особенно понравился тем, что создаёт сразу шаблон при генерации контроллера.
