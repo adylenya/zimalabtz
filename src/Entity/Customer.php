@@ -75,37 +75,18 @@ class Customer
     private ?string $position = null;
 
     /**
-     * Customer's primary phone number
-     * Optional
+     * Customer's gender
      */
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(
-        max: 20,
-        maxMessage: 'Номер телефона не может быть длиннее {{ limit }} символов'
-    )]
-    private ?string $phone1 = null;
+    #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message: 'Пол обязателен для заполнения')]
+    #[Assert\Choice(choices: ['male', 'female'], message: 'Выберите корректное значение пола')]
+    private ?string $gender = null;
 
     /**
-     * Customer's secondary phone number
-     * Optional
+     * Customer's phone number (теперь как отдельная сущность)
      */
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(
-        max: 20,
-        maxMessage: 'Номер телефона не может быть длиннее {{ limit }} символов'
-    )]
-    private ?string $phone2 = null;
-
-    /**
-     * Customer's ???? phone number (честно говоря я не понял что подразумевалось под 3 полями для номера телефона поэтому просто создал 3 поля (: )
-     * Optional
-     */
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(
-        max: 20,
-        maxMessage: 'Номер телефона не может быть длиннее {{ limit }} символов'
-    )]
-    private ?string $phone3 = null;
+    #[ORM\OneToOne(mappedBy: 'customer', cascade: ['persist', 'remove'])]
+    private ?PhoneNumbers $phoneNumbers = null;
 
     /**
      * Created at timestamp
@@ -116,6 +97,8 @@ class Customer
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->phoneNumbers = new PhoneNumbers();
+        $this->phoneNumbers->setCustomer($this);
     }
 
     // Геттеры и сеттеры
@@ -180,36 +163,29 @@ class Customer
         return $this;
     }
 
-    public function getPhone1(): ?string
+    public function getGender(): ?string
     {
-        return $this->phone1;
+        return $this->gender;
     }
 
-    public function setPhone1(?string $phone1): static
+    public function setGender(string $gender): self
     {
-        $this->phone1 = $phone1;
+        $this->gender = $gender;
         return $this;
     }
 
-    public function getPhone2(): ?string
+    public function getPhoneNumbers(): ?PhoneNumbers
     {
-        return $this->phone2;
+        return $this->phoneNumbers;
     }
 
-    public function setPhone2(?string $phone2): static
+    public function setPhoneNumbers(PhoneNumbers $phoneNumbers): self
     {
-        $this->phone2 = $phone2;
-        return $this;
-    }
+        if ($phoneNumbers->getCustomer() !== $this) {
+            $phoneNumbers->setCustomer($this);
+        }
 
-    public function getPhone3(): ?string
-    {
-        return $this->phone3;
-    }
-
-    public function setPhone3(?string $phone3): static
-    {
-        $this->phone3 = $phone3;
+        $this->phoneNumbers = $phoneNumbers;
         return $this;
     }
 

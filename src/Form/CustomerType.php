@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -46,6 +47,15 @@ class CustomerType extends AbstractType
                     'placeholder' => 'example@domain.com'
                 ]
             ])
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Пол',
+                'required' => true,
+                'choices' => [
+                    'Мужской' => 'male',
+                    'Женский' => 'female'
+                ],
+                'attr' => ['class' => 'form-control']
+            ])
             // Необязательные поля
             ->add('companyName', TextType::class, [
                 'label' => 'Название компании',
@@ -63,30 +73,7 @@ class CustomerType extends AbstractType
                     'placeholder' => 'Введите должность'
                 ]
             ])
-            ->add('phone1', TelType::class, [
-                'label' => 'Телефон 1',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => '+7 (999) 999-99-99'
-                ]
-            ])
-            ->add('phone2', TelType::class, [
-                'label' => 'Телефон 2',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => '+7 (999) 999-99-99'
-                ]
-            ])
-            ->add('phone3', TelType::class, [
-                'label' => 'Телефон 3',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => '+7 (999) 999-99-99'
-                ]
-            ])
+            ->add('phoneNumbers', PhoneNumbersType::class)
         ;
     }
 
